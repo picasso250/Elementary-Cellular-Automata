@@ -1,0 +1,135 @@
+<meta charset="utf-8">
+<style>
+  table {
+    border: 1px solid;
+  }
+
+  .cc {
+    width: 10px;
+    height: 10px;
+    border: 0 solid #e69191;
+    display: inline-block;
+  }
+
+  .c0 {
+    background-color: #ffdeb4;
+  }
+
+  .c1 {
+    background-color: #d00c0c;
+  }
+
+  .td {
+    border-right: 1px solid;
+  }
+
+  #res {
+    float: left;
+    position: fixed;
+    right: 0;
+  }
+
+  #mT {
+    float: left;
+  }
+  #res .cc{
+    width:5px;
+    height:5px;
+  }
+</style>
+<table id="mT">
+  <thead>
+    <tr>
+      <td>元胞自动机</td>
+    </tr>
+  </thead>
+  <tbody>
+    <script>
+      function padLeft(str, n, ch) {
+        if (str.length == n) {
+          return str;
+        }
+        let nn = n - str.length;
+        return ch.repeat(nn) + str;
+      }
+      function rule(rep, r) {
+        var html = '';
+        html += ("<div>");
+        html += ("<div>");
+        for (var i = 0; i < rep.length; i++) {
+          html += ("<div class='cc c" + rep[i] + "'>&nbsp;&nbsp;</div>");
+
+        }
+        html += ("</div>");
+
+        html += ("<div><div class='cc'></div>");
+        html += ("<div class='cc c" + r + "'></div>");
+        html += ("<div class='cc'></div></div>");
+
+        html += ("</div>");
+        return html;
+      }
+      function repeatArray(el, n) {
+        var a = [];
+        for (var i = 0; i < n; i++) {
+          a.push(el);
+        }
+        return a;
+      }
+      function randomArray(n) {
+        var a = [];
+        for (var i = 0; i < n; i++) {
+          a.push(Math.random() > 0.5 ? "1" : "0");
+        }
+        return a;
+      }
+      function show(rep) {
+        var size = 240;
+        var myRule = function (a, b, c) {
+          if (a === undefined) a = "0";
+          if (c === undefined) c = "0";
+          var bp = a + b + c;
+          return rep[parseInt(bp, 2)];
+        };
+        var data = randomArray( size);
+        data[parseInt(size / 2)] = "1";
+        var html = '';
+
+        for (var i = 0; i < size; i++) {
+          // print data
+          var line = "";
+          var nextLineData = repeatArray("0", size);
+          for (var j = 0; j < size; j++) {
+            line += ("<div class='cc c" + data[j] + "'>" + "</div>");
+            nextLineData[j] = myRule(data[j - 1], data[j], data[j + 1]);
+          }
+          html += "<div>" + line + "</div>";
+          // prepare next line's data
+          data = nextLineData;
+        }
+        var res = document.getElementById("res");
+        res.innerHTML = html;
+
+        return html;
+      }
+      for (var a = 0; a < 256; a++) {
+        var n = a;
+        console.log(padLeft(n.toString(2), 8, '0'));
+        var rep = padLeft(n.toString(2), 8, '0');
+        document.write("<tr><td>编号" + n + " " + padLeft(n.toString(2), 8, '0') + "</td><td>");
+        document.write("<table><tr>");
+        for (var i = 0; i < 8; i++) {
+          document.write("<td class=td>" + padLeft(i.toString(2), 3, '0') + '→' + rep[i] + rule(padLeft(i.toString(2), 3, '0'), rep[i]));
+          document.write("</td>");
+        }
+        document.write("</tr></table>");
+        document.write("</td><td><button onclick='show(\"" + rep + "\");'>show</button></td></tr>");
+      }
+    </script>
+  </tbody>
+</table>
+<div id="res">
+</div>
+<script>
+  // rule("010","0");
+</script>
