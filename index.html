@@ -1,6 +1,8 @@
 <meta charset="utf-8">
 
-<a style="position:fixed;right:0;" href="https://github.com/picasso250/Elementary-Cellular-Automata"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+<a style="position:fixed;right:0;" href="https://github.com/picasso250/Elementary-Cellular-Automata"><img width="149"
+    height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149"
+    class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
 
 <style>
   table {
@@ -35,9 +37,10 @@
   #mT {
     float: left;
   }
-  #res .cc{
-    width:5px;
-    height:5px;
+
+  #res .cc {
+    width: 5px;
+    height: 5px;
   }
 </style>
 <table id="mT">
@@ -94,7 +97,7 @@
           var bp = a + b + c;
           return rep[parseInt(bp, 2)];
         };
-        var data = randomArray( size);
+        var data = randomArray(size);
         data[parseInt(size / 2)] = "1";
         var html = '';
 
@@ -117,9 +120,9 @@
       }
       for (var a = 0; a < 256; a++) {
         var n = a;
-        console.log(padLeft(n.toString(2), 8, '0'));
-        var rep = padLeft(n.toString(2), 8, '0');
-        document.write("<tr><td>编号" + n + " " + padLeft(n.toString(2), 8, '0') + "</td><td>");
+        var rep = reverseString(padLeft(n.toString(2), 8, '0'));
+        console.log(rep);
+        document.write("<tr><td>编号" + n + " " + rep + "</td><td>");
         document.write("<table><tr>");
         for (var i = 0; i < 8; i++) {
           document.write("<td class=td>" + padLeft(i.toString(2), 3, '0') + '→' + rep[i] + rule(padLeft(i.toString(2), 3, '0'), rep[i]));
@@ -127,6 +130,13 @@
         }
         document.write("</tr></table>");
         document.write("</td><td><button onclick='show(\"" + rep + "\");'>show</button></td></tr>");
+      }
+      function reverseString(str) {
+        // 请把你的代码写在这里
+        var myArray = str.split("");
+        var a = myArray.reverse();
+        var str1 = a.join("");
+        return str1;
       }
     </script>
   </tbody>
